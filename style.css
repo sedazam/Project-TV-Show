@@ -1,3 +1,120 @@
-#root {
-  color: red;
+/* General Page Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  color: #100e0e;
 }
+
+/* Container for all episodes */
+.episode-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Each episode card */
+.episode-card {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin: 16px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+/* Episode header */
+.episode-header {
+  background-color: #eaccccd4;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+
+}
+.episode-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.episode-code {
+  color: #141212;
+  font-size: 0.9em;
+}
+
+
+/* Episode title */
+.episode-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  background-color: #ececec;
+  padding: 12px;
+  margin: 0;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #ccc;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Episode image */
+.episode-card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Summary text */
+.episode-card div {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* Link to TVmaze */
+.episode-card a {
+  display: inline-block;
+  margin-top: 0.25rem;
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+.episode-card a:hover {
+  text-decoration: underline;
+  color: #005fa3;
+
+}
+.episode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.episode-card div {
+  padding: 12px;
+}
+.episode-card a {
+  padding: 12px;
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: bold;
+}
+#root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+
+
