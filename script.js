@@ -18,15 +18,16 @@ episodeList.forEach((episode) => {
   const titleElem = document.createElement("h2");
   titleElem.textContent = `${episodeCode} - ${episode.name}`;
 
-  episode.textContent = `${episodeCode} - ${episode.name}`;
-
   const imageElem = document.createElement("img");
   imageElem.src = episode.image.medium;
-  episode.appendChild(imageElem);
+  imageElem.alt = episode.name;
 
-  episodeSummary.textContent = episode.summary;
-  episode.appendChild(episodeSummary);
-  rootElem.appendChild(episode);
+  const summaryElem = document.createElement("a");
+  summaryElem.innerHTML = episode.summary;
+
+  
+
+    episode.textContent = `${episodeCode} - ${episode.name}`;
 
   const rootElem = document.getElementById("root");
 rootElem.textContent = "Got ${episodeList.length} episode(s)";
