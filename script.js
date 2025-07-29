@@ -12,7 +12,7 @@ function makePageForEpisodes(episodeList) {
     const episodeContainer = document.createElement("div");
     episodeContainer.className = "episode";
 
-    const episodeCode = `S${String(episode.season)}).padStart(2, "0")}E${String(
+    const episodeCode = `S${String(episode.season).padStart(2, "0")}E${String(
       episode.number
     ).padStart(2, "0")}`;
 
