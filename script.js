@@ -14,7 +14,10 @@ episodeList.forEach((episode) => {
   episodeContainer.className = "episode";
 
   const episodeCode = `S${String(episode.season}).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
-  
+
+  const titleElem = document.createElement("h2");
+  titleElem.textContent = `${episodeCode} - ${episode.name}`;
+
   episode.textContent = `${episodeCode} - ${episode.name}`;
 
   const imageElem = document.createElement("img");
