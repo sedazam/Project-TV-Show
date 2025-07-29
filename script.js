@@ -3,6 +3,12 @@ function setup() {
   const allEpisodes = allEpisodes();
   makePageForEpisodes(allEpisodes);
 }
+
+function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+}
+
 const rootElem = document.getElementById("root");
 rootElem.textContent = "Got ${episodeList.length} episode(s)";
 
@@ -18,9 +24,12 @@ episodeList.forEach((episode) => {
   episode.appendChild(episodeSummary);
   rootElem.appendChild(episode);
 });
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+
+
+
+const footer = document.createElement("footer");
+footer.innerHTML = `Data from <a href="https://www.tvmaze.com/">TVmaze</a>`;
+document.body.appendChild(footer);
 }
 
 window.onload = setup;
