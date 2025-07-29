@@ -35,11 +35,8 @@ episodeList.forEach((episode) => {
   episodeContainer.appendChild(summaryElem);
   episodeContainer.appendChild(linkElem);
 
-  const rootElem = document.getElementById("root");
-rootElem.textContent = "Got ${episodeList.length} episode(s)";
+  rootElem.appendChild(episodeContainer);
 });
-
-
 
 const footer = document.createElement("footer");
 footer.innerHTML = `Data originally from <a href="https://www.tvmaze.com/">TVmaze</a>`;
