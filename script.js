@@ -6,14 +6,15 @@ function setup() {
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  rootElem.innerHTML = "";
 }
 
-const rootElem = document.getElementById("root");
-rootElem.textContent = "Got ${episodeList.length} episode(s)";
-
 episodeList.forEach((episode) => {
-  const episodeCode = `S${season}E${number}`;
+  const episodeContainer = document.createElement("div");
+  episodeContainer.className = "episode";
+
+  const episodeCode = `S${String(episode.season}).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
+  
   episode.textContent = `${episodeCode} - ${episode.name}`;
 
   const imageElem = document.createElement("img");
@@ -23,12 +24,15 @@ episodeList.forEach((episode) => {
   episodeSummary.textContent = episode.summary;
   episode.appendChild(episodeSummary);
   rootElem.appendChild(episode);
+
+  const rootElem = document.getElementById("root");
+rootElem.textContent = "Got ${episodeList.length} episode(s)";
 });
 
 
 
 const footer = document.createElement("footer");
-footer.innerHTML = `Data from <a href="https://www.tvmaze.com/">TVmaze</a>`;
+footer.innerHTML = `Data originally from <a href="https://www.tvmaze.com/">TVmaze</a>`;
 document.body.appendChild(footer);
 }
 
