@@ -28,7 +28,7 @@ function makePageForEpisodes(episodeList) {
 
     const linkElem = document.createElement("a");
     linkElem.href = episode.url;
-    linkElem.textContent = "Vie on TVmaze";
+    linkElem.textContent = "View on TVmaze";
     linkElem.target = "_blank";
 
     episodeContainer.appendChild(titleElem);
