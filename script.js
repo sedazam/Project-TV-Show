@@ -25,9 +25,15 @@ episodeList.forEach((episode) => {
   const summaryElem = document.createElement("a");
   summaryElem.innerHTML = episode.summary;
 
-  
+  const linkElem = document.createElement("a");
+  linkElem.href = episode.url;
+  linkElem.textContent = "Vie on TVmaze";
+  linkElem.target = "_blank";
 
-    episode.textContent = `${episodeCode} - ${episode.name}`;
+  episodeContainer.appendChild(titleElem);
+  episodeContainer.appendChild(imageElem);
+  episodeContainer.appendChild(summaryElem);
+  episodeContainer.appendChild(linkElem);
 
   const rootElem = document.getElementById("root");
 rootElem.textContent = "Got ${episodeList.length} episode(s)";
