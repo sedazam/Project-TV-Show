@@ -23,7 +23,7 @@ function makePageForEpisodes(episodeList) {
     imageElem.src = episode.image.medium;
     imageElem.alt = episode.name;
 
-    const summaryElem = document.createElement("a");
+    const summaryElem = document.createElement("div");
     summaryElem.innerHTML = episode.summary;
 
     const linkElem = document.createElement("a");
