@@ -1,8 +1,6 @@
-//You can edit ALL of the code here
-
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-  rootElem.innerHTML = ""; 
+  rootElem.innerHTML = "";
   const grid = document.createElement("div");
   grid.classList.add("episode-grid");
 
@@ -10,54 +8,40 @@ function makePageForEpisodes(episodeList) {
     const card = document.createElement("div");
     card.classList.add("episode-card");
 
-    
-    const header = document.createElement("div");
-    header.classList.add("episode-header");
+    // Title and episode code in a rectangle
+    const titleBox = document.createElement("div");
+    titleBox.classList.add("episode-title-box");
 
-    const title = document.createElement("h2");
-
-    const episodeTitle = document.createElement("span");
-    episodeTitle.textContent = ep.name;
-    episodeTitle.classList.add("episode-title");
+    const title = document.createElement("span");
+    title.classList.add("episode-title");
+    title.textContent = ep.name;
 
     const episodeCode = document.createElement("span");
-    episodeCode.textContent = ` - S${formatEpisodeCode(ep.season, ep.number)}`;
     episodeCode.classList.add("episode-code");
+    episodeCode.textContent = `S${ep.season.toString().padStart(2, "0")}E${ep.number.toString().padStart(2, "0")}`;
 
-    title.appendChild(episodeTitle);
-    title.appendChild(episodeCode);
-    header.appendChild(title);
+    titleBox.appendChild(title);
+    titleBox.appendChild(document.createTextNode(" – "));
+    titleBox.appendChild(episodeCode);
 
-    // Episode image
+    // Image
     const image = document.createElement("img");
     image.src = ep.image.medium;
     image.alt = ep.name;
 
-    // Episode summary
+    // Summary
     const summary = document.createElement("div");
+    summary.classList.add("episode-summary");
     summary.innerHTML = ep.summary;
 
-    // Link to TVmaze
-    const link = document.createElement("a");
-    link.href = ep.url;
-    link.textContent = "View on TVmaze";
-    link.target = "_blank";
-
     // Build card
-    card.appendChild(header);
+    card.appendChild(titleBox);
     card.appendChild(image);
     card.appendChild(summary);
-    card.appendChild(link);
 
     grid.appendChild(card);
   });
   rootElem.appendChild(grid);
-}
-
-function formatEpisodeCode(season, number) {
-  const s = season.toString().padStart(2, "0");
-  const e = number.toString().padStart(2, "0");
-  return `${s}E${e}`;
 }
 
 function setup() {
