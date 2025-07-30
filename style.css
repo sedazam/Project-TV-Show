@@ -1,4 +1,5 @@
-.episode-grid {
+.episode-grid,
+#episodes-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
@@ -61,4 +62,13 @@
   color: #444;
   text-align: left;
   padding: 0 0.5em;
+}
+
+.episode-card a {
+  margin: 1em auto 0 auto;
+  color: #1a0dab;
+  text-decoration: underline;
+  font-size: 1rem;
+  text-align: center;
+  display: block;
 }

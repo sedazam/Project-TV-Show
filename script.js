@@ -1,48 +1,69 @@
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
-  const grid = document.createElement("div");
-  grid.classList.add("episode-grid");
 
-  episodeList.forEach((ep) => {
-    const card = document.createElement("div");
-    card.classList.add("episode-card");
+  const episodesContainer = document.createElement('div');
+  episodesContainer.id = 'episodes-container';
+  rootElem.appendChild(episodesContainer);
 
-    // Title and episode code in a rectangle
-    const titleBox = document.createElement("div");
-    titleBox.classList.add("episode-title-box");
+  function pad(num) {
+    return num.toString().padStart(2, '0');
+  }
 
-    const title = document.createElement("span");
-    title.classList.add("episode-title");
-    title.textContent = ep.name;
+  episodeList.forEach(episode => {
+    const card = document.createElement('div');
+    card.className = 'episode-card';
 
-    const episodeCode = document.createElement("span");
-    episodeCode.classList.add("episode-code");
-    episodeCode.textContent = `S${ep.season.toString().padStart(2, "0")}E${ep.number.toString().padStart(2, "0")}`;
+
+    const titleBox = document.createElement('div');
+    titleBox.className = 'episode-title-box';
+
+    const title = document.createElement('span');
+    title.className = 'episode-title';
+    title.textContent = episode.name;
+
+    const episodeCode = document.createElement('span');
+    episodeCode.className = 'episode-code';
+    episodeCode.textContent = `S${pad(episode.season)}E${pad(episode.number)}`;
 
     titleBox.appendChild(title);
-    titleBox.appendChild(document.createTextNode(" – "));
+    titleBox.appendChild(document.createTextNode(' – '));
     titleBox.appendChild(episodeCode);
 
     // Image
-    const image = document.createElement("img");
-    image.src = ep.image.medium;
-    image.alt = ep.name;
+    const img = document.createElement('img');
+    img.src = episode.image?.medium || '';
+    img.alt = episode.name;
 
     // Summary
-    const summary = document.createElement("div");
-    summary.classList.add("episode-summary");
-    summary.innerHTML = ep.summary;
+    const summary = document.createElement('div');
+    summary.className = 'episode-summary';
+    summary.innerHTML = episode.summary || '';
+
+    // TVMaze link for the episode
+    const link = document.createElement('a');
+    link.href = episode.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'View on TVMaze';
 
     // Build card
     card.appendChild(titleBox);
-    card.appendChild(image);
+    card.appendChild(img);
     card.appendChild(summary);
+    card.appendChild(link);
 
-    grid.appendChild(card);
+    episodesContainer.appendChild(card);
   });
-  rootElem.appendChild(grid);
+
+  // Attribution link at the bottom
+  const credit = document.createElement('p');
+  credit.style.textAlign = 'center';
+  credit.style.margin = '2em 0';
+  credit.innerHTML = `Data originally from <a href="https://tvmaze.com/" target="_blank" rel="noopener noreferrer">TVMaze.com</a>`;
+  rootElem.appendChild(credit);
 }
+
 
 function setup() {
   const episodes = getAllEpisodes();
