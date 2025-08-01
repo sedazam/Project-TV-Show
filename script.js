@@ -7,6 +7,7 @@ function setup() {
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
+  rootElem.className = "episode-grid";
 
   episodeList.forEach((episode) => {
     const episodeContainer = document.createElement("div");
