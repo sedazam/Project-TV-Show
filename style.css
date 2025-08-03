@@ -1,6 +1,11 @@
-/* #root {
-  color: red;
-} */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+/* Use episode-grid as the grid container */
 .episode-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -17,8 +22,64 @@
   flex-direction: column;
   align-items: center;
 }
+
 img {
   max-width: 100%;
   display: block;
-  margin-top: 1em;
+  margin: 1em auto;
+}
+
+.episode h2 {
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  background: #fff;
+  padding: 0.5em;
+  border-bottom: 2px solid #007bff;
+  border-radius: 12px 12px 0 0;
+  margin: -1em -1em 1em -1em;
+}
+
+.episode div {
+  font-size: 0.9em;
+  color: #444;
+  text-align: left;
+  padding: 0.5em 0;
+  margin-bottom: 0.5em;
+  flex: 1;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.episode a {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.episode a:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .episode-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .episode-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+  }
 }
