@@ -8,10 +8,23 @@
   border-radius: 8px;
   background-color: #f4f4f4;
   max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1em;
 }
 
 img {
   max-width: 100%;
   display: block;
   margin-top: 1em;
+}
+
+.episode-title {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.episode-description {
+  font-size: 1em;
+  color: #666;
 }
