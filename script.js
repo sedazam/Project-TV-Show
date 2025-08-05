@@ -13,7 +13,7 @@ function makePageForEpisodes(episodeList) {
   episodeList.forEach((episode) => {
     const card = document.createElement("div");
     card.className = "episode-card";
-    card.id = `episode-${episode.id}`;
+    card.id = `episode-${episode.id}`; // optional
 
     const titleBox = document.createElement("div");
     titleBox.className = "episode-title-box";
@@ -67,6 +67,8 @@ function setupEpisodeSelect(episodes) {
     return num.toString().padStart(2, "0");
   }
 
+  select.innerHTML = '<option value="">Select an episode...</option>';
+
   episodes.forEach((episode, index) => {
     const option = document.createElement("option");
     const code = `S${pad(episode.season)}E${pad(episode.number)}`;
@@ -88,13 +90,56 @@ function setupEpisodeSelect(episodes) {
     makePageForEpisodes(episodes);
     select.value = "";
     showAllBtn.style.display = "none";
+    document.getElementById("search-input").value = "";
+    document.getElementById("match-count").textContent = "";
+  });
+}
+
+function setupSearchInput(episodes) {
+  const input = document.getElementById("search-input");
+  const matchCount = document.getElementById("match-count");
+  const showAllBtn = document.getElementById("show-all-button");
+  const select = document.getElementById("episode-select");
+
+  input.addEventListener("input", function (event) {
+    const searchTerm = event.target.value.toLowerCase().trim();
+
+    const filteredEpisodes = episodes.filter((episode) => {
+      return (
+        episode.name.toLowerCase().includes(searchTerm) ||
+        episode.summary?.toLowerCase().includes(searchTerm)
+      );
+    });
+
+    makePageForEpisodes(filteredEpisodes);
+    matchCount.textContent = `${filteredEpisodes.length} of ${episodes.length} episodes match your search.`;
+    showAllBtn.style.display =
+      filteredEpisodes.length < episodes.length ? "inline-block" : "none";
+    select.value = "";
   });
 }
 
 function setup() {
-  const episodes = getAllEpisodes();
-  makePageForEpisodes(episodes);
-  setupEpisodeSelect(episodes);
+  const loadingMessage = document.getElementById("loading-message");
+
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((episodes) => {
+      loadingMessage?.remove();
+      makePageForEpisodes(episodes);
+      setupEpisodeSelect(episodes);
+      setupSearchInput(episodes);
+    })
+    .catch((error) => {
+      console.error(error);
+      const root = document.getElementById("root");
+      root.innerHTML = `<p style="text-align:center; color:red; font-weight:bold;">⚠️ Failed to load episodes. Please try again later.</p>`;
+    });
 }
 
 window.onload = setup;
