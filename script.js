@@ -14,7 +14,7 @@ function makePageForEpisodes(episodeList) {
   episodeList.forEach((episode) => {
     const card = document.createElement("div");
     card.className = "episode-card";
-    card.id = `episode-${episode.id}`; // optional
+    card.id = `episode-${episode.id}`;
 
     const titleBox = document.createElement("div");
     titleBox.className = "episode-title-box";
@@ -89,8 +89,7 @@ function setupEpisodeSelect(episodes) {
     makePageForEpisodes(episodes);
     select.value = "";
     showAllBtn.style.display = "none";
-    
-    // Clear search input and match count if they exist
+
     const searchInput = document.getElementById("search-input");
     const matchCount = document.getElementById("match-count");
     if (searchInput) {
@@ -108,7 +107,6 @@ function setupSearchInput(episodes) {
   const showAllBtn = document.getElementById("show-all-button");
   const select = document.getElementById("episode-select");
 
-  // Check if search input exists before setting up event listener
   if (!input) {
     console.warn("Search input not found");
     return;
@@ -125,18 +123,16 @@ function setupSearchInput(episodes) {
     });
 
     makePageForEpisodes(filteredEpisodes);
-    
-    // Update match count if element exists
+
     if (matchCount) {
       matchCount.textContent = `${filteredEpisodes.length} of ${episodes.length} episodes match your search.`;
     }
-    
-    // Show/hide "Show All" button if it exists
+
     if (showAllBtn) {
-      showAllBtn.style.display = filteredEpisodes.length < episodes.length ? "inline-block" : "none";
+      showAllBtn.style.display =
+        filteredEpisodes.length < episodes.length ? "inline-block" : "none";
     }
-    
-    // Clear episode selector if it exists
+
     if (select) {
       select.value = "";
     }
