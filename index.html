@@ -9,8 +9,18 @@
   </head>
 
   <body>
-    <div id="root">
+    <div style="text-align: center; margin: 1em">
+      <select id="episode-select" style="padding: 0.5em; font-size: 1rem">
+        <option value="">Select an episode...</option>
+      </select>
+      <button
+        id="show-all-button"
+        style="display: none; margin-left: 1em; padding: 0.5em"
+      >
+        Show All Episodes
+      </button>
     </div>
+    <div id="root"></div>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
