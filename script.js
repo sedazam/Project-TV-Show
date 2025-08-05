@@ -31,7 +31,9 @@ function makePageForEpisodes(episodeList) {
     titleBox.appendChild(episodeCode);
 
     const img = document.createElement("img");
-    img.src = episode.image?.medium || "";
+    img.src =
+      episode.image?.medium ||
+      "https://via.placeholder.com/250x140?text=No+Image";
     img.alt = episode.name;
 
     const summary = document.createElement("div");
