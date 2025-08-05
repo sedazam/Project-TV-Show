@@ -1,3 +1,8 @@
+// Utility function to pad numbers with leading zeros
+function pad(num) {
+  return num.toString().padStart(2, "0");
+}
+
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
@@ -5,10 +10,6 @@ function makePageForEpisodes(episodeList) {
   const episodesContainer = document.createElement("div");
   episodesContainer.id = "episodes-container";
   rootElem.appendChild(episodesContainer);
-
-  function pad(num) {
-    return num.toString().padStart(2, "0");
-  }
 
   episodeList.forEach((episode) => {
     const card = document.createElement("div");
@@ -65,10 +66,6 @@ function setupEpisodeSelect(episodes) {
   const select = document.getElementById("episode-select");
   const showAllBtn = document.getElementById("show-all-button");
 
-  function pad(num) {
-    return num.toString().padStart(2, "0");
-  }
-
   select.innerHTML = '<option value="">Select an episode...</option>';
 
   episodes.forEach((episode, index) => {
@@ -92,8 +89,16 @@ function setupEpisodeSelect(episodes) {
     makePageForEpisodes(episodes);
     select.value = "";
     showAllBtn.style.display = "none";
-    document.getElementById("search-input").value = "";
-    document.getElementById("match-count").textContent = "";
+    
+    // Clear search input and match count if they exist
+    const searchInput = document.getElementById("search-input");
+    const matchCount = document.getElementById("match-count");
+    if (searchInput) {
+      searchInput.value = "";
+    }
+    if (matchCount) {
+      matchCount.textContent = "";
+    }
   });
 }
 
@@ -102,6 +107,12 @@ function setupSearchInput(episodes) {
   const matchCount = document.getElementById("match-count");
   const showAllBtn = document.getElementById("show-all-button");
   const select = document.getElementById("episode-select");
+
+  // Check if search input exists before setting up event listener
+  if (!input) {
+    console.warn("Search input not found");
+    return;
+  }
 
   input.addEventListener("input", function (event) {
     const searchTerm = event.target.value.toLowerCase().trim();
@@ -114,10 +125,21 @@ function setupSearchInput(episodes) {
     });
 
     makePageForEpisodes(filteredEpisodes);
-    matchCount.textContent = `${filteredEpisodes.length} of ${episodes.length} episodes match your search.`;
-    showAllBtn.style.display =
-      filteredEpisodes.length < episodes.length ? "inline-block" : "none";
-    select.value = "";
+    
+    // Update match count if element exists
+    if (matchCount) {
+      matchCount.textContent = `${filteredEpisodes.length} of ${episodes.length} episodes match your search.`;
+    }
+    
+    // Show/hide "Show All" button if it exists
+    if (showAllBtn) {
+      showAllBtn.style.display = filteredEpisodes.length < episodes.length ? "inline-block" : "none";
+    }
+    
+    // Clear episode selector if it exists
+    if (select) {
+      select.value = "";
+    }
   });
 }
 

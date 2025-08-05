@@ -10,7 +10,16 @@
 
   <body>
     <div style="text-align: center; margin: 1em">
-      <select id="episode-select" style="padding: 0.5em; font-size: 1rem">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search episodes..."
+        style="padding: 0.5em; width: 80%; max-width: 400px; font-size: 1rem"
+      />
+      <select
+        id="episode-select"
+        style="padding: 0.5em; font-size: 1rem; margin-left: 1em"
+      >
         <option value="">Select an episode...</option>
       </select>
       <button
