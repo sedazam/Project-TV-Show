@@ -10,21 +10,28 @@
 
   <body>
     <div style="text-align: center; margin: 1em">
+      <label for="show-select" style="font-weight: bold; margin-right: 0.5em;">Choose a show:</label>
+      <select
+        id="show-select"
+        style="padding: 0.5em; font-size: 1rem; margin-right: 1em"
+      >
+        <option value="">Loading shows...</option>
+      </select>
       <input
         type="text"
         id="search-input"
         placeholder="Search episodes..."
-        style="padding: 0.5em; width: 80%; max-width: 400px; font-size: 1rem"
+        style="padding: 0.5em; width: 60%; max-width: 300px; font-size: 1rem; margin-right: 1em"
       />
       <select
         id="episode-select"
-        style="padding: 0.5em; font-size: 1rem; margin-left: 1em"
+        style="padding: 0.5em; font-size: 1rem; margin-right: 1em"
       >
         <option value="">Select an episode...</option>
       </select>
       <button
         id="show-all-button"
-        style="display: none; margin-left: 1em; padding: 0.5em"
+        style="display: none; padding: 0.5em"
       >
         Show All Episodes
       </button>
