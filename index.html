@@ -9,35 +9,35 @@
   </head>
 
   <body>
-    <div style="text-align: center; margin: 1em">
-      <label for="show-select" style="font-weight: bold; margin-right: 0.5em;">Choose a show:</label>
+    <div style="display: flex; align-items: center; margin: 1em; gap: 1em; flex-wrap: wrap;">
       <select
         id="show-select"
-        style="padding: 0.5em; font-size: 1rem; margin-right: 1em"
+        style="padding: 0.5em; font-size: 1rem;"
       >
         <option value="">Loading shows...</option>
+      </select>
+      <select
+        id="episode-select"
+        style="padding: 0.5em; font-size: 1rem;"
+      >
+        <option value="">Select an episode...</option>
       </select>
       <input
         type="text"
         id="search-input"
         placeholder="Search episodes..."
-        style="padding: 0.5em; width: 60%; max-width: 300px; font-size: 1rem; margin-right: 1em"
+        style="
+          padding: 0.5em;
+          width: 300px;
+          font-size: 1rem;
+        "
       />
-      <select
-        id="episode-select"
-        style="padding: 0.5em; font-size: 1rem; margin-right: 1em"
-      >
-        <option value="">Select an episode...</option>
-      </select>
-      <button
-        id="show-all-button"
-        style="display: none; padding: 0.5em"
-      >
+      <button id="show-all-button" style="display: none; padding: 0.5em">
         Show All Episodes
       </button>
     </div>
 
-    <p id="match-count" style="text-align: center; margin: 1em 0"></p>
+    <p id="match-count" style="text-align: left; margin: 0 1em 1em 1em;"></p>
 
     <div id="root">
       <p id="loading-message" style="text-align: center; font-weight: bold">

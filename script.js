@@ -84,60 +84,12 @@ function setup(shows, episodes = null) {
     "episodes"
   );
 
-  // Remove existing controls if they exist
-  const existingControls = document.querySelector(
-    "div[style*='display: flex']"
-  );
-  if (existingControls) {
-    existingControls.remove();
-  }
-
-  // ==================== UNIFIED CONTROLS ====================
-  // Create controls container with new order: Episode dropdown → Show dropdown → Search bar
-  const controls = document.createElement("div");
-  controls.className = "unified-controls";
-  controls.style.display = "flex";
-  controls.style.justifyContent = "flex-start";
-  controls.style.alignItems = "center";
-  controls.style.gap = "1em";
-  controls.style.margin = "1em";
-
-  // 1. EPISODE SELECT DROPDOWN (leftmost)
-  const episodeSelect = document.createElement("select");
-  episodeSelect.id = "episode-select";
-  episodeSelect.style.padding = "0.5em";
-  episodeSelect.style.fontSize = "1rem";
-  episodeSelect.style.minWidth = "200px";
-  controls.appendChild(episodeSelect);
-
-  // 2. SHOW SELECT DROPDOWN (middle)
-  const showSelect = document.createElement("select");
-  showSelect.id = "show-select";
-  showSelect.style.padding = "0.5em";
-  showSelect.style.fontSize = "1rem";
-  showSelect.style.minWidth = "200px";
-  controls.appendChild(showSelect);
-
-  // 3. UNIFIED SEARCH BAR (rightmost)
-  const unifiedSearchInput = document.createElement("input");
-  unifiedSearchInput.type = "text";
-  unifiedSearchInput.id = "unified-search-input";
-  unifiedSearchInput.placeholder = "Search shows or episodes...";
-  unifiedSearchInput.style.padding = "0.5em";
-  unifiedSearchInput.style.width = "300px";
-  unifiedSearchInput.style.fontSize = "1rem";
-  controls.appendChild(unifiedSearchInput);
-
-  // 4. MATCH COUNT (far right)
-  const matchCount = document.createElement("span");
-  matchCount.id = "match-count";
-  matchCount.style.marginLeft = "1em";
-  matchCount.style.fontSize = "1rem";
-  controls.appendChild(matchCount);
-
-  // Insert controls above the root element
-  const rootElem = document.getElementById("root");
-  rootElem.parentNode.insertBefore(controls, rootElem);
+  // ==================== USE EXISTING HTML CONTROLS ====================
+  // Get references to existing HTML elements instead of creating new ones
+  const showSelect = document.getElementById("show-select");
+  const episodeSelect = document.getElementById("episode-select");
+  const searchInput = document.getElementById("search-input");
+  const matchCount = document.getElementById("match-count");
 
   // ==================== POPULATION FUNCTIONS ====================
 
@@ -211,7 +163,7 @@ function setup(shows, episodes = null) {
   // ==================== EVENT LISTENERS ====================
 
   // Unified search - searches both shows and episodes
-  unifiedSearchInput.addEventListener("input", function (event) {
+  searchInput.addEventListener("input", function (event) {
     const searchTerm = event.target.value.toLowerCase().trim();
 
     if (!episodes || episodes.length === 0) {
@@ -260,7 +212,7 @@ function setup(shows, episodes = null) {
     const selectedEpisode = [episodes[parseInt(selectedIndex)]];
     console.log("Selected episode:", selectedEpisode[0]?.name);
     updateDisplay(selectedEpisode);
-    unifiedSearchInput.value = "";
+    searchInput.value = "";
   });
 }
 
