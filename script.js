@@ -11,7 +11,6 @@ let filteredShows = [];
 let filteredEpisodes = [];
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("TV Show App by sedazam - 2025-08-13 15:29:04");
   setupEventListeners();
   loadAllShows();
 });
@@ -324,7 +323,3 @@ function stripHTML(html) {
   div.innerHTML = html;
   return div.textContent || div.innerText || "";
 }
-
-console.log(
-  "TV Show Explorer ready! URLs cached to prevent duplicate fetches."
-);
