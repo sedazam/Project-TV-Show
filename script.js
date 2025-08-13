@@ -63,6 +63,79 @@ function makePageForEpisodes(episodeList) {
   });
 }
 
+function makePageForShows(showList) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "";
+
+  const showsContainer = document.createElement("div");
+  showsContainer.className = "shows-grid";
+  rootElem.appendChild(showsContainer);
+
+  showList.forEach((show) => {
+    const card = document.createElement("div");
+    card.className = "show-card";
+
+    // Make the card clickable
+    card.style.cursor = "pointer";
+    card.onclick = () => {
+      // We'll implement this click handler in the next step
+      console.log("Show clicked:", show.name);
+      loadEpisodesForShow(show.id);
+    };
+
+    // Show name
+    const title = document.createElement("h3");
+    title.className = "show-title";
+    title.textContent = show.name;
+
+    // Show image
+    const img = document.createElement("img");
+    img.src = show.image?.medium || "";
+    img.alt = show.name;
+    img.className = "show-image";
+
+    // Show summary
+    const summary = document.createElement("div");
+    summary.className = "show-summary";
+    summary.innerHTML = show.summary || "No summary available";
+
+    // Show details (genres, status, rating, runtime)
+    const details = document.createElement("div");
+    details.className = "show-details";
+
+    const genres = document.createElement("p");
+    genres.innerHTML = `<strong>Genres:</strong> ${
+      show.genres?.join(", ") || "N/A"
+    }`;
+
+    const status = document.createElement("p");
+    status.innerHTML = `<strong>Status:</strong> ${show.status || "N/A"}`;
+
+    const rating = document.createElement("p");
+    rating.innerHTML = `<strong>Rating:</strong> ${
+      show.rating?.average || "N/A"
+    }`;
+
+    const runtime = document.createElement("p");
+    runtime.innerHTML = `<strong>Runtime:</strong> ${
+      show.runtime || "N/A"
+    } minutes`;
+
+    details.appendChild(genres);
+    details.appendChild(status);
+    details.appendChild(rating);
+    details.appendChild(runtime);
+
+    // Build the card
+    card.appendChild(title);
+    card.appendChild(img);
+    card.appendChild(summary);
+    card.appendChild(details);
+
+    showsContainer.appendChild(card);
+  });
+}
+
 function showMessage(message, isError = false) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
