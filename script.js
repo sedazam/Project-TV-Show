@@ -1,33 +1,27 @@
-// Cache system - never fetch the same URL twice
 const cache = {
   shows: [],
   episodes: {},
   allGenres: new Set(),
 };
 
-// Current state
-let currentView = "shows"; // 'shows' or 'episodes'
+let currentView = "shows";
 let currentShowId = null;
 let currentShowName = "";
 let filteredShows = [];
 let filteredEpisodes = [];
 
-// Initialize app
 document.addEventListener("DOMContentLoaded", function () {
   console.log("TV Show App by sedazam - 2025-08-13 15:29:04");
   setupEventListeners();
   loadAllShows();
 });
 
-// Event listeners
 function setupEventListeners() {
-  // Back navigation
   document.getElementById("back-link").addEventListener("click", (e) => {
     e.preventDefault();
     showShowsView();
   });
 
-  // Shows search and filter
   document
     .getElementById("search-input")
     .addEventListener("input", filterShows);
@@ -35,7 +29,6 @@ function setupEventListeners() {
     .getElementById("show-select")
     .addEventListener("change", filterShows);
 
-  // Episodes search and filter
   document
     .getElementById("episode-select")
     .addEventListener("change", filterEpisodes);
@@ -44,7 +37,6 @@ function setupEventListeners() {
     .addEventListener("input", filterEpisodes);
 }
 
-// Load all shows (only once)
 async function loadAllShows() {
   if (cache.shows.length > 0) {
     displayShows(cache.shows);
@@ -63,7 +55,6 @@ async function loadAllShows() {
     cache.shows = shows;
     filteredShows = shows;
 
-    // Extract genres
     shows.forEach((show) => {
       if (show.genres) {
         show.genres.forEach((genre) => cache.allGenres.add(genre));
@@ -79,7 +70,6 @@ async function loadAllShows() {
   }
 }
 
-// Load episodes for show (only once per show)
 async function loadEpisodes(showId, showName) {
   if (cache.episodes[showId]) {
     showEpisodesView(showName, cache.episodes[showId]);
@@ -105,7 +95,6 @@ async function loadEpisodes(showId, showName) {
   }
 }
 
-// Switch to shows view
 function showShowsView() {
   currentView = "shows";
   currentShowId = null;
@@ -114,7 +103,6 @@ function showShowsView() {
   document.getElementById("episode-controls").classList.add("hidden");
   document.getElementById("search-controls").classList.remove("hidden");
 
-  // Clear episode search
   document.getElementById("episode-search").value = "";
   document.getElementById("episode-select").value = "";
 
@@ -122,7 +110,6 @@ function showShowsView() {
   updateShowCount(filteredShows.length);
 }
 
-// Switch to episodes view
 function showEpisodesView(showName, episodes) {
   currentView = "episodes";
   currentShowName = showName;
@@ -137,7 +124,6 @@ function showEpisodesView(showName, episodes) {
   updateEpisodeCount(episodes.length);
 }
 
-// Populate show select dropdown
 function populateShowSelect() {
   const select = document.getElementById("show-select");
   select.innerHTML = '<option value="">All shows</option>';
@@ -151,7 +137,6 @@ function populateShowSelect() {
   });
 }
 
-// Populate episode select dropdown
 function populateEpisodeSelect(episodes) {
   const select = document.getElementById("episode-select");
   select.innerHTML = '<option value="">All episodes</option>';
@@ -169,7 +154,6 @@ function populateEpisodeSelect(episodes) {
   });
 }
 
-// Filter shows
 function filterShows() {
   const searchTerm = document
     .getElementById("search-input")
@@ -195,7 +179,6 @@ function filterShows() {
   updateShowCount(filteredShows.length);
 }
 
-// Filter episodes
 function filterEpisodes() {
   const selectedEpisodeId = document.getElementById("episode-select").value;
   const searchTerm = document
@@ -220,7 +203,6 @@ function filterEpisodes() {
   updateEpisodeCount(filteredEpisodes.length);
 }
 
-// Display shows
 function displayShows(shows) {
   const root = document.getElementById("root");
 
@@ -235,7 +217,6 @@ function displayShows(shows) {
         </div>
     `;
 
-  // Add click handlers
   shows.forEach((show) => {
     document.getElementById(`show-${show.id}`).addEventListener("click", () => {
       currentShowId = show.id;
@@ -244,7 +225,6 @@ function displayShows(shows) {
   });
 }
 
-// Display episodes
 function displayEpisodes(episodes) {
   const root = document.getElementById("root");
 
@@ -260,7 +240,6 @@ function displayEpisodes(episodes) {
     `;
 }
 
-// Create show HTML
 function createShowHTML(show) {
   const image =
     show.image?.medium || "https://via.placeholder.com/100x140?text=No+Image";
@@ -273,21 +252,26 @@ function createShowHTML(show) {
   const runtime = show.runtime ? `${show.runtime} min` : "N/A";
 
   return `
-        <div class="show-item" id="show-${show.id}">
-            <img src="${image}" alt="${show.name}" class="show-image">
-            <div class="show-content">
-                <div class="show-title">${show.name}</div>
-                <div class="show-summary">${summary}</div>
-                <div class="show-details">
-                    <div><span class="show-rating">★ ${rating}</span> | ${status} | ${runtime}</div>
-                    <div class="show-genres">${genres}</div>
-                </div>
-            </div>
+    <div class="show-item" id="show-${show.id}">
+      <div class="show-image-column">
+        <div class="show-title">${show.name}</div>
+        <img src="${image}" alt="${show.name}" class="show-image">
+      </div>
+      <div class="show-content-row">
+        <div class="show-content">
+          <div class="show-summary">${summary}</div>
         </div>
-    `;
+        <div class="show-details">
+          <div><strong>Rated:</strong> <span class="show-rating">${rating}</span></div>
+          <div><strong>Genres:</strong> <span class="show-genres">${genres}</span></div>
+          <div><strong>Status:</strong> ${status}</div>
+          <div><strong>Runtime:</strong> ${runtime}</div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
-// Create episode HTML
 function createEpisodeHTML(episode) {
   const image =
     episode.image?.medium ||
@@ -313,7 +297,6 @@ function createEpisodeHTML(episode) {
     `;
 }
 
-// Update counters
 function updateShowCount(count) {
   document.getElementById("show-count").textContent = `Found ${count} shows`;
 }
@@ -324,7 +307,6 @@ function updateEpisodeCount(count) {
   ).textContent = `Displaying ${count} episodes`;
 }
 
-// Utility functions
 function showLoading(message) {
   document.getElementById(
     "root"
