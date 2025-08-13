@@ -379,9 +379,9 @@ async function loadEpisodesForShow(showId) {
       cache.episodes[showId].length,
       "episodes"
     );
-    const shows = await loadShows(); // Get shows from cache
+    showView("episodes", showName);
     makePageForEpisodes(cache.episodes[showId]);
-    setup(shows, cache.episodes[showId]);
+    setup(cache.shows, cache.episodes[showId]);
     return;
   }
 
@@ -395,14 +395,13 @@ async function loadEpisodesForShow(showId) {
 
     console.log("Loaded episodes from API:", episodes.length, "episodes");
 
-    // Validate episode data structure
     if (!validateEpisodeData(episodes)) {
       throw new Error("Invalid episode data structure");
     }
 
-    cache.episodes[showId] = episodes; // Cache the episodes for this show
-    const shows = await loadShows();
-    setup(shows, episodes);
+    cache.episodes[showId] = episodes;
+    showView("episodes", showName);
+    setup(cache.shows, episodes);
   } catch (error) {
     console.error("Error loading episodes:", error);
     showMessage("Error loading episodes. Please try again later.", true);
