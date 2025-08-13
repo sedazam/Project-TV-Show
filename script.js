@@ -136,6 +136,41 @@ function makePageForShows(showList) {
   });
 }
 
+// Function to show/hide different views and navigation
+function showView(viewType, showName = null) {
+  const navigation = document.getElementById("navigation");
+  const controlsDiv = document.querySelector("div[style*='display: flex']"); // Your existing controls
+  const currentShowName = document.getElementById("current-show-name");
+
+  if (viewType === "shows") {
+    // Hide navigation and episode controls when showing shows list
+    navigation.style.display = "none";
+    controlsDiv.style.display = "none";
+  } else if (viewType === "episodes") {
+    // Show navigation and episode controls when showing episodes
+    navigation.style.display = "block";
+    controlsDiv.style.display = "flex";
+    if (showName) {
+      currentShowName.textContent = `Episodes for: ${showName}`;
+    }
+  }
+}
+
+// Function to handle going back to shows
+function goBackToShows() {
+  showView("shows");
+  const shows = cache.shows; // Get shows from cache
+  makePageForShows(shows);
+
+  // Reset episode-related state
+  const episodeSelect = document.getElementById("episode-select");
+  const searchInput = document.getElementById("search-input");
+  const matchCount = document.getElementById("match-count");
+
+  episodeSelect.innerHTML = '<option value="">Select an episode...</option>';
+  searchInput.value = "";
+  matchCount.textContent = "";
+}
 function showMessage(message, isError = false) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
@@ -335,6 +370,9 @@ function validateEpisodeData(episodes) {
 async function loadEpisodesForShow(showId) {
   console.log("Loading episodes for show ID:", showId);
 
+  const show = cache.shows.find((s) => s.id === showId);
+  const showName = show ? show.name : "Unknown Show";
+
   if (cache.episodes[showId]) {
     console.log(
       "Episodes found in cache:",
@@ -375,10 +413,13 @@ window.onload = async function () {
   showMessage("Loading shows...");
   try {
     const shows = await loadShows();
+    showView("shows");
+    makePageForShows(shows);
+
+    const backButton = document.getElementById("back-to-shows");
+    backButton.addEventListener("click", goBackToShows);
+
     setup(shows);
-    // Clear the loading message
-    const rootElem = document.getElementById("root");
-    rootElem.innerHTML = "";
   } catch (error) {
     showMessage("Error loading shows. Please try again later.", true);
   }
