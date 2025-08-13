@@ -8,83 +8,44 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
   <body>
-    <!-- Page Header -->
-    <header class="page-header">
-      <h1>TV Show Explorer</h1>
-      <p>Discover and explore your favorite TV shows and episodes</p>
-    </header>
-
-    <!-- Navigation Bar (hidden by default) -->
-    <nav id="navigation" class="navigation hidden">
-      <div class="nav-container">
-        <button id="back-to-shows" class="btn btn-primary">
-          ← Back to Shows
-        </button>
-        <span id="current-show-name" class="show-title"></span>
-      </div>
-    </nav>
-
-    <!-- Episode Controls (hidden by default) -->
-    <div id="episode-controls" class="episode-controls hidden">
-      <div class="controls-container">
-        <div class="controls-row">
-          <!-- Episode Dropdown -->
-          <div class="control-group">
-            <label for="episode-select" class="control-label">
-              SELECT EPISODE:
-            </label>
-            <select id="episode-select" class="form-select">
-              <option value="">Choose an episode...</option>
-            </select>
-          </div>
-
-          <!-- Search Input -->
-          <div class="control-group control-group-flex">
-            <label for="search-input" class="control-label">
-              SEARCH EPISODES:
-            </label>
-            <input
-              type="text"
-              id="search-input"
-              class="form-input"
-              placeholder="Search by episode name, summary, or season..."
-            />
-          </div>
-
-          <!-- Match Counter -->
-          <div id="match-count" class="match-count"></div>
-
-          <!-- Show All Button -->
-          <button id="show-all-button" class="btn btn-success hidden">
-            Show All Episodes
-          </button>
-        </div>
-      </div>
+    <!-- Back Navigation (hidden on shows page) -->
+    <div id="back-nav" class="back-nav hidden">
+      <a href="#" id="back-link">← Back to show search</a>
     </div>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-      <div id="root" class="content-container">
-        <!-- Loading Message -->
-        <div id="loading-message" class="loading-container">
-          <div class="loading-card">
-            <div class="spinner"></div>
-            <p>Loading TV shows, please wait...</p>
-          </div>
-        </div>
-      </div>
-    </main>
+    <!-- Search Controls -->
+    <div id="search-controls" class="search-controls">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search for a show"
+        class="search-input"
+      />
+      <div id="show-count" class="show-count">Found 240 shows</div>
+      <select id="show-select" class="show-select">
+        <option value="">All shows</option>
+      </select>
+    </div>
 
-    <!-- Footer -->
-    <footer class="page-footer">
-      <p>
-        TV Show Explorer | Built by <strong>Seddiq Azam (sedazam)</strong> |
-        Data from TVMaze API
-      </p>
-      <p class="footer-sub">© 2025 | Educational Project</p>
-    </footer>
+    <!-- Episode Controls (hidden on shows page) -->
+    <div id="episode-controls" class="episode-controls hidden">
+      <select id="episode-select" class="episode-select">
+        <option value="">All episodes</option>
+      </select>
+      <input
+        type="text"
+        id="episode-search"
+        placeholder="Search for an episode"
+        class="episode-search"
+      />
+      <div id="episode-count" class="episode-count">Displaying 63 episodes</div>
+    </div>
 
-    <!-- Load JavaScript -->
+    <!-- Main Content -->
+    <div id="root" class="root-content">
+      <div id="loading" class="loading">Loading shows...</div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
