@@ -276,9 +276,15 @@ function setup(shows, episodes = null) {
 
     if (!episodes || episodes.length === 0) {
       // If no episodes loaded, search shows only
-      const filteredShows = shows.filter((show) =>
-        show.name.toLowerCase().includes(searchTerm)
-      );
+      const filteredShows = shows.filter((show) => {
+        const nameMatch = show.name.toLowerCase().includes(searchTerm);
+        const genresMatch = show.genres?.some((genre) =>
+          genre.toLowerCase().includes(searchTerm)
+        );
+        const summaryMatch = show.summary?.toLowerCase().includes(searchTerm);
+        return nameMatch || summaryMatch;
+      });
+      mak;
       populateShowSelect(filteredShows);
     } else {
       // If episodes are loaded, search episodes
