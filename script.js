@@ -350,8 +350,10 @@ function validateEpisodeData(episodes) {
 async function loadEpisodesForShow(showId) {
   console.log("Loading episodes for show ID:", showId);
 
-  const show = cache.shows.find((s) => s.id === showId);
+  const show = cache.shows.find((s) => s.id == showId);
   const showName = show ? show.name : "Unknown Show";
+
+  console.log("Found show:", show);
 
   if (cache.episodes[showId]) {
     console.log(
@@ -367,12 +369,18 @@ async function loadEpisodesForShow(showId) {
 
   showMessage("Loading episodes...");
   try {
-    const response = await fetch(
-      `https://api.tvmaze.com/shows/${showId}/episodes`
-    );
-    if (!response.ok) throw new Error("Network response was not ok");
-    const episodes = await response.json();
+    const url = `https://api.tvmaze.com/shows/${showId}/episodes`;
+    console.log("Fetching from URL:", url);
 
+    const response = await fetch(url);
+    console.log("Response status:", response.status);
+    console.log("Response ok:", response.ok);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const episodes = await response.json();
     console.log("Loaded episodes from API:", episodes.length, "episodes");
 
     if (!validateEpisodeData(episodes)) {
@@ -381,10 +389,13 @@ async function loadEpisodesForShow(showId) {
 
     cache.episodes[showId] = episodes;
     showView("episodes", showName);
+    makePageForEpisodes(episodes);
     setup(cache.shows, episodes);
   } catch (error) {
-    console.error("Error loading episodes:", error);
-    showMessage("Error loading episodes. Please try again later.", true);
+    console.error("Detailed error:", error);
+    console.error("Error name:", error.name);
+    console.error("Error message:", error.message);
+    showMessage(`Error loading episodes: ${error.message}`, true);
   }
 }
 
