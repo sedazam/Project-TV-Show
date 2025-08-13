@@ -126,18 +126,25 @@ function makePageForShows(showList) {
 
 function showView(viewType, showName = null) {
   const navigation = document.getElementById("navigation");
-  const controlsDiv = document.querySelector("div[style*='display: flex']");
+  const episodeControls = document.getElementById("episode-controls");
   const currentShowName = document.getElementById("current-show-name");
 
-  updateSearchPlaceholder(viewType);
+  console.log("Navigation element:", navigation);
+  console.log("Episode controls element:", episodeControls);
+  console.log("Current show name element:", currentShowName);
+
+  if (!navigation || !episodeControls) {
+    console.error("Required HTML elements missing!");
+    return;
+  }
 
   if (viewType === "shows") {
     navigation.style.display = "none";
-    controlsDiv.style.display = "none";
+    episodeControls.style.display = "none";
   } else if (viewType === "episodes") {
     navigation.style.display = "block";
-    controlsDiv.style.display = "flex";
-    if (showName) {
+    episodeControls.style.display = "block";
+    if (showName && currentShowName) {
       currentShowName.textContent = `Episodes for: ${showName}`;
     }
   }
