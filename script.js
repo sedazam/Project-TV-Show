@@ -284,10 +284,8 @@ function setup(shows, episodes = null) {
         const summaryMatch = show.summary?.toLowerCase().includes(searchTerm);
         return nameMatch || summaryMatch;
       });
-      mak;
-      populateShowSelect(filteredShows);
+      makePageForShows(filteredShows);
     } else {
-      // If episodes are loaded, search episodes
       const filteredEpisodes = episodes.filter(
         (episode) =>
           episode.name.toLowerCase().includes(searchTerm) ||
