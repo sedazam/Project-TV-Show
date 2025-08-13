@@ -7,60 +7,41 @@
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
-
   <body>
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        margin: 1em;
-        gap: 1em;
-        flex-wrap: nowrap;
-        width: calc(100% - 2em);
-      "
-    >
-      <select
-        id="show-select"
-        style="padding: 0.5em; font-size: 1rem; min-width: 150px"
-      >
-        <option value="">Loading shows...</option>
-      </select>
-      <select
-        id="episode-select"
-        style="padding: 0.5em; font-size: 1rem; min-width: 150px"
-      >
-        <option value="">Select an episode...</option>
-      </select>
+    <div id="back-nav" class="back-nav hidden">
+      <a href="#" id="back-link">← Back to show search</a>
+    </div>
+
+    <div id="search-controls" class="search-controls">
       <input
         type="text"
         id="search-input"
-        placeholder="Search episodes..."
-        style="padding: 0.5em; font-size: 1rem; flex: 1; min-width: 200px"
+        placeholder="Search for a show"
+        class="search-input"
       />
-      <span
-        id="match-count"
-        style="
-          padding: 0.5em;
-          font-size: 1rem;
-          color: #666;
-          white-space: nowrap;
-        "
-      ></span>
-      <button
-        id="show-all-button"
-        style="display: none; padding: 0.5em; white-space: nowrap"
-      >
-        Show All Episodes
-      </button>
+      <div id="show-count" class="show-count">Found 240 shows</div>
+      <select id="show-select" class="show-select">
+        <option value="">All shows</option>
+      </select>
     </div>
 
-    <div id="root">
-      <p id="loading-message" style="text-align: center; font-weight: bold">
-        Loading episodes, please wait...
-      </p>
+    <div id="episode-controls" class="episode-controls hidden">
+      <select id="episode-select" class="episode-select">
+        <option value="">All episodes</option>
+      </select>
+      <input
+        type="text"
+        id="episode-search"
+        placeholder="Search for an episode"
+        class="episode-search"
+      />
+      <div id="episode-count" class="episode-count">Displaying 63 episodes</div>
     </div>
 
-    <!-- Loads YOUR javascript code -->
+    <div id="root" class="root-content">
+      <div id="loading" class="loading">Loading shows...</div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
