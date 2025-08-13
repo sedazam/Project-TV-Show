@@ -20,7 +20,6 @@ function makePageForEpisodes(episodeList) {
     const card = document.createElement("div");
     card.className = "episode-card";
 
-    // Title and episode code box
     const titleBox = document.createElement("div");
     titleBox.className = "episode-title-box";
 
@@ -36,24 +35,20 @@ function makePageForEpisodes(episodeList) {
     titleBox.appendChild(document.createTextNode(" – "));
     titleBox.appendChild(episodeCode);
 
-    // Image
     const img = document.createElement("img");
     img.src = episode.image?.medium || "";
     img.alt = episode.name;
 
-    // Summary
     const summary = document.createElement("div");
     summary.className = "episode-summary";
     summary.innerHTML = episode.summary || "";
 
-    // TVMaze link for the episode
     const link = document.createElement("a");
     link.href = episode.url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.textContent = "View on TVMaze";
 
-    // Build card
     card.appendChild(titleBox);
     card.appendChild(img);
     card.appendChild(summary);
@@ -75,31 +70,25 @@ function makePageForShows(showList) {
     const card = document.createElement("div");
     card.className = "show-card";
 
-    // Make the card clickable
     card.style.cursor = "pointer";
     card.onclick = () => {
-      // We'll implement this click handler in the next step
       console.log("Show clicked:", show.name);
       loadEpisodesForShow(show.id);
     };
 
-    // Show name
     const title = document.createElement("h3");
     title.className = "show-title";
     title.textContent = show.name;
 
-    // Show image
     const img = document.createElement("img");
     img.src = show.image?.medium || "";
     img.alt = show.name;
     img.className = "show-image";
 
-    // Show summary
     const summary = document.createElement("div");
     summary.className = "show-summary";
     summary.innerHTML = show.summary || "No summary available";
 
-    // Show details (genres, status, rating, runtime)
     const details = document.createElement("div");
     details.className = "show-details";
 
@@ -126,7 +115,6 @@ function makePageForShows(showList) {
     details.appendChild(rating);
     details.appendChild(runtime);
 
-    // Build the card
     card.appendChild(title);
     card.appendChild(img);
     card.appendChild(summary);
@@ -136,18 +124,17 @@ function makePageForShows(showList) {
   });
 }
 
-// Function to show/hide different views and navigation
 function showView(viewType, showName = null) {
   const navigation = document.getElementById("navigation");
-  const controlsDiv = document.querySelector("div[style*='display: flex']"); // Your existing controls
+  const controlsDiv = document.querySelector("div[style*='display: flex']");
   const currentShowName = document.getElementById("current-show-name");
 
+  updateSearchPlaceholder(viewType);
+
   if (viewType === "shows") {
-    // Hide navigation and episode controls when showing shows list
     navigation.style.display = "none";
     controlsDiv.style.display = "none";
   } else if (viewType === "episodes") {
-    // Show navigation and episode controls when showing episodes
     navigation.style.display = "block";
     controlsDiv.style.display = "flex";
     if (showName) {
@@ -156,13 +143,11 @@ function showView(viewType, showName = null) {
   }
 }
 
-// Function to handle going back to shows
 function goBackToShows() {
   showView("shows");
-  const shows = cache.shows; // Get shows from cache
+  const shows = cache.shows;
   makePageForShows(shows);
 
-  // Reset episode-related state
   const episodeSelect = document.getElementById("episode-select");
   const searchInput = document.getElementById("search-input");
   const matchCount = document.getElementById("match-count");
@@ -182,7 +167,14 @@ function showMessage(message, isError = false) {
   msg.style.color = isError ? "red" : "#222";
   rootElem.appendChild(msg);
 }
-
+function updateSearchPlaceholder(viewType) {
+  const searchInput = document.getElementById("search-input");
+  if (viewType === "shows") {
+    searchInput.placeholder = "Search shows by name, genre, or summary...";
+  } else if (viewType === "episodes") {
+    searchInput.placeholder = "Search episodes...";
+  }
+}
 function setup(shows, episodes = null) {
   console.log(
     "Setup called with:",
@@ -191,17 +183,11 @@ function setup(shows, episodes = null) {
     episodes?.length || 0,
     "episodes"
   );
-
-  // ==================== USE EXISTING HTML CONTROLS ====================
-  // Get references to existing HTML elements instead of creating new ones
   const showSelect = document.getElementById("show-select");
   const episodeSelect = document.getElementById("episode-select");
   const searchInput = document.getElementById("search-input");
   const matchCount = document.getElementById("match-count");
 
-  // ==================== POPULATION FUNCTIONS ====================
-
-  // Function to populate show dropdown
   function populateShowSelect(showsToDisplay) {
     showSelect.innerHTML = "";
 
@@ -218,7 +204,6 @@ function setup(shows, episodes = null) {
     });
   }
 
-  // Function to populate episode dropdown
   function populateEpisodeSelect(episodesToDisplay) {
     console.log(
       "Populating episode dropdown with:",
@@ -248,7 +233,6 @@ function setup(shows, episodes = null) {
     }
   }
 
-  // Function to update display and count
   function updateDisplay(filteredEpisodes) {
     if (filteredEpisodes && filteredEpisodes.length > 0) {
       makePageForEpisodes(filteredEpisodes);
@@ -263,19 +247,14 @@ function setup(shows, episodes = null) {
     }
   }
 
-  // Initial population
   populateShowSelect(shows);
   populateEpisodeSelect(episodes);
   updateDisplay(episodes);
 
-  // ==================== EVENT LISTENERS ====================
-
-  // Unified search - searches both shows and episodes
   searchInput.addEventListener("input", function (event) {
     const searchTerm = event.target.value.toLowerCase().trim();
 
     if (!episodes || episodes.length === 0) {
-      // If no episodes loaded, search shows only
       const filteredShows = shows.filter((show) => {
         const nameMatch = show.name.toLowerCase().includes(searchTerm);
         const genresMatch = show.genres?.some((genre) =>
@@ -297,7 +276,6 @@ function setup(shows, episodes = null) {
     }
   });
 
-  // Show selection event
   showSelect.addEventListener("change", function (event) {
     const selectedShowId = event.target.value;
     if (selectedShowId === "") {
@@ -310,7 +288,6 @@ function setup(shows, episodes = null) {
     loadEpisodesForShow(selectedShowId);
   });
 
-  // Episode selection event
   episodeSelect.addEventListener("change", function (event) {
     const selectedIndex = event.target.value;
     console.log("Episode selected, index:", selectedIndex);
@@ -336,10 +313,9 @@ async function loadShows() {
   shows.sort((a, b) =>
     a.name.toLowerCase().localeCompare(b.name.toLowerCase())
   );
-  cache.shows = shows; // Cache the shows
+  cache.shows = shows;
   return shows;
 }
-// Test function to validate episode data structure
 function validateEpisodeData(episodes) {
   if (!episodes || !Array.isArray(episodes)) {
     console.error("Episodes is not a valid array:", episodes);
